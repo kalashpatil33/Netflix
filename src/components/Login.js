@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { checkValidData } from '../utils/validate';
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../utils/firebase';
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMessage, seterrorMessage] = useState(null);
@@ -25,8 +27,37 @@ const Login = () => {
       return;
     }
     const message = checkValidData(enteredEmail, enteredPassword);
-    // console.log(message)
     seterrorMessage(message);
+    // console.log(message)
+    if (message) return; //jar valid ch nhi tar ka validation karycha..
+
+    //Ata sign in /sign up cha logic lavuya..
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrorMessage(errorCode + " " + errorMessage);
+        });
+
+    }
+    else {
+      signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrorMessage(errorCode + " " + errorMessage);
+        });
+    }
   }
   return (
     <div>

@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { checkValidData } from '../utils/validate';
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMessage, seterrorMessage] = useState(null);
@@ -10,7 +13,8 @@ const Login = () => {
   const name = useRef(null);
   const password = useRef(null);
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)?$/;
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const toggleSignIn = () => {
     setisSignInForm(!isSignInForm); //
   }
@@ -23,34 +27,41 @@ const Login = () => {
     const enteredEmail = email.current ? email.current.value : '';
     const enteredPassword = password.current ? password.current.value : '';
     if (!isSignInForm && !nameRegex.test(enteredName)) {
-      seterrorMessage('Invalid name format. Please enter a valid name.');
+      seterrorMessage('Invalid name format. Plzease enter a valid name.');
       return;
     }
     const message = checkValidData(enteredEmail, enteredPassword);
     seterrorMessage(message);
     // console.log(message)
     if (message) return; //jar valid ch nhi tar ka validation karycha..
-
     //Ata sign in /sign up cha logic lavuya..
     if (!isSignInForm) {
       createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then((userCredential) => {
           // Signed up 
           const user = userCredential.user;
-          // ...
+          updateProfile(user, {
+            displayName: enteredName, photoURL: "https://avatars.githubusercontent.com/u/102899864?v=4"
+          }).then(() => {
+            const { uid, email, displayName, photoURL } = auth.currentUser;
+            dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+            navigate("/browse");
+          }).catch((error) => {
+            seterrorMessage(error.errorMessage);
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           seterrorMessage(errorCode + " " + errorMessage);
         });
-
     }
     else {
       signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          // console.log(user);
+          navigate("/browse");
+         
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -62,7 +73,8 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className='absolute'><img src="https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-10d6-4a64-a619-a21da22f8999/a449fabb-05e4-4c8a-b062-b0bec7d03085/IN-en-20240115-trifectadaily-perspective_alpha_website_large.jpg" alt='Background' />
+      <div className='absolute'>
+        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-10d6-4a64-a619-a21da22f8999/a449fabb-05e4-4c8a-b062-b0bec7d03085/IN-en-20240115-trifectadaily-perspective_alpha_website_large.jpg" alt='Background' />
       </div>
       <form onSubmit={(e) => {
         e.preventDefault();

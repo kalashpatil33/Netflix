@@ -3,7 +3,7 @@ import Header from './Header'
 import { checkValidData } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 const Login = () => {
@@ -13,7 +13,6 @@ const Login = () => {
   const name = useRef(null);
   const password = useRef(null);
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)?$/;
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const toggleSignIn = () => {
     setisSignInForm(!isSignInForm); //
@@ -43,11 +42,10 @@ const Login = () => {
           updateProfile(user, {
             displayName: enteredName, photoURL: "https://avatars.githubusercontent.com/u/102899864?v=4"
           }).then(() => {
-            const { uid, email, displayName, photoURL } = auth.currentUser;
-            dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
-            navigate("/browse");
-          }).catch((error) => {
-            seterrorMessage(error.errorMessage);
+          //   const { uid, email, displayName, photoURL } = auth.currentUser;
+          //   dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+          // }).catch((error) => {
+          //   seterrorMessage(error.errorMessage);
           });
         })
         .catch((error) => {
@@ -60,8 +58,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/browse");
-         
         })
         .catch((error) => {
           const errorCode = error.code;

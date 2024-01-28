@@ -1,22 +1,25 @@
-import React, { useEffect } from 'react'
+
+import useNowPlayingmovies from '../hooks/useNowPlayingmovies'
 import Header from './Header'
-import { API_OPTIONS } from '../utils/constants'
-import { addNowPlayingMovies } from '../utils/movieSlice'
-import { useDispatch } from 'react-redux'
+import MainContainer from './MainContainer';
+import SecondaryContainer from './SecondaryContainer';
+
 const Browse = () => {
-    const dispatch = useDispatch();
-    const getNowPlayingMovies = async () => {
-        const data = await fetch('https://api.themoviedb.org/3/movie/now_playing?page=1', API_OPTIONS);
-        const json = await data.json();
-        // console.log(json);
-        dispatch(addNowPlayingMovies(json.results));
-    }
-    useEffect(() => {
-        getNowPlayingMovies();
-    }, []);
+    useNowPlayingmovies(); //updates the redux store with now playing movies.
     return (
         <div>
             <Header />
+            <MainContainer />
+            <SecondaryContainer />
+            {/* 
+             MainContainer 
+                -VideoBackground
+                -Videotitle
+             SecondaryContainer
+                -MovieList*n
+                  -cards*n
+                  -
+            */}
         </div>
     )
 }

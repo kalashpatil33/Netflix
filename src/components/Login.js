@@ -3,7 +3,7 @@ import Header from './Header'
 import { checkValidData } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-
+import { USER_AVATAR } from '../utils/constants';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 const Login = () => {
@@ -40,12 +40,12 @@ const Login = () => {
           // Signed up 
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: enteredName, photoURL: "https://avatars.githubusercontent.com/u/102899864?v=4"
+            displayName: enteredName, photoURL: USER_AVATAR
           }).then(() => {
-          //   const { uid, email, displayName, photoURL } = auth.currentUser;
-          //   dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
-          // }).catch((error) => {
-          //   seterrorMessage(error.errorMessage);
+            //   const { uid, email, displayName, photoURL } = auth.currentUser;
+            //   dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+            // }).catch((error) => {
+            //   seterrorMessage(error.errorMessage);
           });
         })
         .catch((error) => {

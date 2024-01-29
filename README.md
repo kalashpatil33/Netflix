@@ -34,6 +34,8 @@
     -Feteched Dynamic API.
     -Did everything using custom hooks hence maintaining maintainer. 
     -Building GPT search Feature
+    -MultiLanguage Feature Added.
+
 
     
 

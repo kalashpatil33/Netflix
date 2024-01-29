@@ -42,8 +42,8 @@ const Login = () => {
           updateProfile(user, {
             displayName: enteredName, photoURL: USER_AVATAR
           }).then(() => {
-            //   const { uid, email, displayName, photoURL } = auth.currentUser;
-            //   dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
             // }).catch((error) => {
             //   seterrorMessage(error.errorMessage);
           });
@@ -93,4 +93,4 @@ const Login = () => {
     </div>
   )
 }
-export default Login
+export default Login;

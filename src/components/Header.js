@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { useEffect } from "react";
-import { LOGO} from "../utils/constants";
+import { LOGO } from "../utils/constants";
+import { toggleGPTSearchView } from "../utils/GPTSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,6 +17,10 @@ const Header = () => {
       navigate('/error');
       console.error("Sign out error:", error);
     });
+  }
+  const handleGPTSearch = () => {
+    // Toggle GPT Search Button
+    dispatch(toggleGPTSearchView());
   }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,7 +35,7 @@ const Header = () => {
         navigate("/");
       }
     });
-  // this  will unsubscribe when  component unmounts .
+    // this  will unsubscribe when  component unmounts .
     return () => {
       unsubscribe();
     }
@@ -42,9 +47,14 @@ const Header = () => {
         alt="Netflix Logo" />
 
       {user && (
-        <div className='p-4'>
-          <img alt='usericon' src={user?.photoURL} className='w-10 ml-5' />
-          <button onClick={handleSignOut} className='bg-red-700 rounded-lg p-2'>Sign out</button>
+        <div className='p-4 flex '>
+          <div className="mt-10 mr-4">
+            <button onClick={handleGPTSearch} className="bg-red-700 rounded-lg p-2">GPT Search</button>
+          </div>
+          <div>
+            <img alt='usericon' src={user?.photoURL} className='w-10 ml-5' />
+            <button onClick={handleSignOut} className='bg-red-700 rounded-lg p-2'>Sign out</button>
+          </div>
         </div>
       )}
     </div>

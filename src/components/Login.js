@@ -3,7 +3,7 @@ import Header from './Header'
 import { checkValidData } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { USER_AVATAR } from '../utils/constants';
+import { BG_IMG_URL, USER_AVATAR } from '../utils/constants';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 const Login = () => {
@@ -42,8 +42,8 @@ const Login = () => {
           updateProfile(user, {
             displayName: enteredName, photoURL: USER_AVATAR
           }).then(() => {
-              const { uid, email, displayName, photoURL } = auth.currentUser;
-              dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+            const { uid, email, displayName, photoURL } = auth.currentUser;
+            dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
             // }).catch((error) => {
             //   seterrorMessage(error.errorMessage);
           });
@@ -70,7 +70,7 @@ const Login = () => {
     <div>
       <Header />
       <div className='absolute'>
-        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-10d6-4a64-a619-a21da22f8999/a449fabb-05e4-4c8a-b062-b0bec7d03085/IN-en-20240115-trifectadaily-perspective_alpha_website_large.jpg" alt='Background' />
+        <img src={BG_IMG_URL} alt='Background' />
       </div>
       <form onSubmit={(e) => {
         e.preventDefault();

@@ -32,7 +32,8 @@
     -TMDB Image CDN URL
     -Made the broswe Page look awesome
     -Feteched Dynamic API.
-    -Did everything using custom hooks hence maintaining maintainer.
+    -Did everything using custom hooks hence maintaining maintainer. 
+    -Building GPT search Feature
 
     
 

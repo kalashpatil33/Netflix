@@ -35,6 +35,8 @@
     -Did everything using custom hooks hence maintaining maintainer. 
     -Building GPT search Feature
     -MultiLanguage Feature Added.
+    -GPT AI integrated. (Important Note This Api provides free service only for 3 months from the date of account creation(CHAT GPT account creation.))
+    
 
 
     

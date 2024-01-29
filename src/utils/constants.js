@@ -19,3 +19,5 @@ export const SUPPORTED_LANGUAGES =
     [{ identifier: "English", name: "English" },
     { identifier: "Hindi", name: "Hindi" },
     { identifier: "Marathi", name: "Marathi" }];
+
+export const OPEN_AI_KEY = "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";//Hi key kalashphotos6 walya account chi ahe wali ahe remmeber

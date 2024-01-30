@@ -7,17 +7,15 @@ export const API_OPTIONS = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MWY5MmY3MDczYTQ0NTRmNmQxMjJhYmNiNzQ0YWM3YyIsInN1YiI6IjY1YjYyMmZlZjY1OTZmMDE0OWZlODYxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Kftm0MQwxH3jRYEv-_pW17gDAggwnjmWGSTA8m99P4s'
+        Authorization: process.env.REACT_APP_TMDB_KEY 
     }
 };
-
 export const BG_IMG_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-10d6-4a64-a619-a21da22f8999/a449fabb-05e4-4c8a-b062-b0bec7d03085/IN-en-20240115-trifectadaily-perspective_alpha_website_large.jpg";
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
-
-
 export const SUPPORTED_LANGUAGES =
     [{ identifier: "English", name: "English" },
     { identifier: "Hindi", name: "Hindi" },
     { identifier: "Marathi", name: "Marathi" }];
 
-export const OPEN_AI_KEY = "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";//Hi key kalashphotos6 walya account chi ahe wali ahe remmeber
+export const OPEN_AI_KEY = "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"
+//Hi key kalashphotos6 walya account chi ahe wali ahe remmeber

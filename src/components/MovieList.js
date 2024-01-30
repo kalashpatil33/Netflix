@@ -10,7 +10,7 @@ const MovieList = ({ title, movies }) => {
           {/* Add negative margin to compensate for scrollbar */}
           {movies?.map((movie, index) => (
             <div className='m-2' key={index}>
-              <MovieCard posterpath={movie.poster_path} />
+              <MovieCard posterpath={movie.poster_path}/>
             </div>
           ))}
         </div>

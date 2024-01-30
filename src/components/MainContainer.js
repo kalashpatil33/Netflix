@@ -8,6 +8,7 @@ const MainContainer = () => {
     if (movies === null)
         return;  //This is for the case when we are into the for first time when no movie is updated in the store or else that movies[0] will throw error. This is termed as Early return.
     const mainMovie = movies[0];
+    console.log(mainMovie);
     const { original_title, overview, id } = mainMovie;
     return (
         <div>

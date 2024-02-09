@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGPTSearchView } from "../utils/GPTSlice";
 import { changeLanguage } from "../utils/configSlice";
+import { showPanel } from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,6 +19,15 @@ const Header = () => {
       navigate('/error');
       console.error("Sign out error:", error);
     });
+  }
+  const auth = getAuth();
+  const userloggedin = auth.currentUser;
+  if (userloggedin !== null) {
+    // The user object has basic properties such as display name, email, etc.
+    // const displayName1 = userloggedin.displayName;
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
   }
   const handleGPTSearch = () => {
     // Toggle GPT Search Button
@@ -42,43 +52,51 @@ const Header = () => {
         navigate("/");
       }
     });
-    // this  will unsubscribe when  component unmounts .
+    // this  will unsubscribe when component unmounts .
     return () => {
       unsubscribe();
     }
   }, [])
+  const openpanel = () => {
+    dispatch(showPanel());
+  }
   const user = useSelector((store) => store.user);
+  const toshowPanel = useSelector((store) => store.config.Panel);
   return (
-    <div className='absolute w-screen px-8 py-4 bg-gradient-to-b from-black z-10 flex justify-between'>
-      <img className="w-44" src={LOGO}
-        alt="Netflix Logo" />
+    <div className='absolute w-screen px-8 py-4 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between items-center'>
+      <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="Netflix Logo" />
       {user && (
-        <div className='p-4 flex'>
-          {toshowLanguage &&
-            <select className="w-24 mt-10 mr-4  bg-white rounded-lg p-2 " onChange={handleLanguageChange}>
-              {SUPPORTED_LANGUAGES.map((language) =>
-              (
-                <option key={language.identifier}
-                  value={language.identifier}>
+        <div className='p-4 flex items-center'>
+          {toshowLanguage && (
+            <select className="w-24 mr-4 bg-white rounded-lg p-2" onChange={handleLanguageChange}>
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language.identifier} value={language.identifier}>
                   {language.name}
                 </option>
-              )
-              )
-              }
+              ))}
             </select>
-          }
-          <div className="mt-10 mr-4">
-            <button onClick={handleGPTSearch} className="bg-red-700 rounded-lg p-2">
+          )}
+          <div className="flex items-center">
+            <button onClick={handleGPTSearch} className="bg-red-700 rounded-lg p-2 mr-4">
               {toshowLanguage ? "Home Page" : "GPT Search"}
             </button>
+            <div className="flex items-center">
+              <button onClick={handleSignOut}
+                className='bg-red-700 rounded-lg p-2 mr-2'>Sign out</button>
+              <img alt='usericon' src={user.photoURL}
+                className='w-10 ml-2 rounded-full cursor-pointer' />
+              <div onClick={openpanel} className="text-red-700 font-bold ml-2 text-lg cursor-pointer">{user.displayName}</div>
+            </div>
+            {toshowPanel &&
+              <div className="bg-red-600">
+                {/* <showUse/> */}
+              </div>
+            }
           </div>
-          <div>
-            <img alt='usericon' src={user?.photoURL} className='w-10 ml-5' />
-            <button onClick={handleSignOut} className='bg-red-700 rounded-lg p-2'>Sign out</button>
-          </div>
+
         </div>
       )}
     </div>
-  ); 
+  );
 };
 export default Header;

@@ -36,12 +36,17 @@
     -Building GPT search Feature
     -MultiLanguage Feature Added.
     -GPT AI integrated. (Important Note This Api provides free service only for 3 months from the date of account creation(CHAT GPT account creation.))
-    
+    -Get OPEN AI API Key
+    -GPT search page
+    -Memoization
+    -created gptSlice added data..
+    -.env file to gitignore...
+    -Made it Responsive
 
 
     
 
-
+<!-- There is bug in case of env file do check that out and work on it. -->
 
 # Features
 

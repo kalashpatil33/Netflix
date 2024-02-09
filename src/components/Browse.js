@@ -12,7 +12,6 @@ import SecondaryContainer from './SecondaryContainer';
 
 const Browse = () => {
     const showGPTSearch = useSelector((store) => store.GPT.showGPTSearch);
-
     useNowPlayingmovies(); //updates the redux store with now playing movies.
     usePopularMovies();
     useTopRatedMovies();

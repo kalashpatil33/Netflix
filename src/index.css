@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 *::-webkit-scrollbar {
-    display: none;
-  }
+  display: none;
+}
+/* Add these styles to your Tailwind CSS configuration or stylesheets */
